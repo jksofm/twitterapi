@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx nodemon --development",
-    "dev:prod": "npx nodemon --production",
+    "dev": "NODE_ENV=development npx nodemon --development",
+    "dev:prod": "NODE_ENV=production npx nodemon --production",
     "build": "rimraf ./dist && tsc && tsc-alias",
-    "start": "node dist/index.js --production",
+    "start": "NODE_ENV=production node dist/index.js --production",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --check .",
