@@ -34,7 +34,9 @@ const usersRouter = Router()
 
 usersRouter.post('/login', validatorLogin, loginControllers)
 usersRouter.post('/register', registerValidator, registerControllers)
-
+usersRouter.get('/testapi/test', (req, res, next) => {
+  res.end('hello')
+})
 usersRouter.get('/oauth/google', OauthController)
 
 usersRouter.post('/logout', accessTokenValidator, refreshTokenValidator, logoutControllers)
