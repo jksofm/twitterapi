@@ -43,7 +43,7 @@ usersRouter.post('/logout', accessTokenValidator, refreshTokenValidator, logoutC
 
 usersRouter.post('/refresh-token', refreshTokenValidator, refreshTokenController)
 
-usersRouter.post('/verify-email', emailVerifyTokenValidator, verifyEmailControllers)
+usersRouter.post('/verify-email', accessTokenValidator, emailVerifyTokenValidator, verifyEmailControllers)
 
 usersRouter.post('/resend-verify-email', accessTokenValidator, resendVerifyEmailControllers)
 

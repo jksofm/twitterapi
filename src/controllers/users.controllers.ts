@@ -81,11 +81,14 @@ export const refreshTokenController = catchAsync(async (req: Request, res: Respo
 })
 export const verifyEmailControllers = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   // const decoded_email_verify_token = req.decoded_email_verify_token
-
-  const user_id = req.decoded_email_verify_token?.userId
+  const user_idfromEmailVerifyToken = req.decoded_email_verify_token?.userId
+  const user_id = req.decoded_authorization?.userId
 
   const user = await DB.users.findOne({
     _id: new ObjectId(user_id)
+  })
+  const userfromemailverifytoken = await DB.users.findOne({
+    _id: new ObjectId(user_idfromEmailVerifyToken)
   })
 
   if (!user) {
@@ -96,9 +99,17 @@ export const verifyEmailControllers = catchAsync(async (req: Request, res: Respo
       })
     )
   }
+  console.log(user)
+  console.log(userfromemailverifytoken)
+
   // Check xem email da duoc verify hay chua
-  if (user?.email_verify_token === '') {
-    res.status(200).json({
+  if (userfromemailverifytoken?.email !== user?.email) {
+    res.status(401).json({
+      message: usersMessages.EMAIL_VERIFY_TOKEN_IS_NOT_EXIST
+    })
+    return
+  } else if (user?.email_verify_token === '' && user?.verify === UserVerifyStatus.Verified) {
+    res.status(403).json({
       message: usersMessages.EMAIL_ALREADY_VERIFIED_BEFORE
     })
   } else {
@@ -124,7 +135,7 @@ export const resendVerifyEmailControllers = catchAsync(async (req: Request, res:
       })
     )
   }
-  const result = await usersServices.resendVerifyEmailToken(user_id as string,user.email)
+  const result = await usersServices.resendVerifyEmailToken(user_id as string, user.email)
   res.json({
     message: usersMessages.RESEND_EMAIL_VERIFY_TOKEN_SUCCESS,
     result

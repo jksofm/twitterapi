@@ -12,13 +12,11 @@ import { catchAsync } from '~/utils/catchAsync'
 export const uploadImageController = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user_id = req.decoded_authorization?.userId
-    const result = await mediaService.handleResizeImage(req,user_id)
+    const result = await mediaService.handleResizeImage(req, user_id)
 
     res.json({
       message: usersMessages.UPLOAD_FILE_SUCCESS,
-      result: {
-        result
-      }
+      result
     })
   } catch (error: any) {
     throw new ErrorWithStatus({
@@ -55,7 +53,7 @@ export const handleStreamVideoController = catchAsync(async (req: Request, res: 
 
   const start = Number(range?.replace(/\D/g, ''))
 
-  const end = Math.min(start + chunkSize, videoSize -1)
+  const end = Math.min(start + chunkSize, videoSize - 1)
 
   const contentLength = end - start + 1
   const contentType = mime.getType(videoPath) || 'video/*'
@@ -75,7 +73,7 @@ export const handleStreamVideoController = catchAsync(async (req: Request, res: 
 export const uploadVideoController = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user_id = req.decoded_authorization?.userId
-    const result = await mediaService.uploadVideo(req,user_id)
+    const result = await mediaService.uploadVideo(req, user_id)
 
     res.json({
       message: usersMessages.UPLOAD_FILE_SUCCESS,

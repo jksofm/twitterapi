@@ -27,7 +27,7 @@ export const usersMessages = {
   REFRESH_TOKEN_IS_REQUIRED: 'Refresh token is required',
   REFRESH_TOKEN_IS_INVALID: 'Refresh token is invalid',
   REFRESH_TOKEN_IS_NOT_EXIST: 'Refresh token is already used or not exist',
-  EMAIL_VERIFY_TOKEN_IS_REQUIRED: 'You need to confirm your email',
+  EMAIL_VERIFY_TOKEN_IS_REQUIRED: 'Email verify token is required',
   EMAIL_VERIFY_TOKEN_IS_NOT_EXIST: 'Email verify token does not exist',
   USER_IS_NOT_FOUND: 'User is not found',
   EMAIL_ALREADY_VERIFIED_BEFORE: 'Your email is already verified before',
@@ -66,7 +66,7 @@ export const usersMessages = {
   UPLOAD_FILE_SUCCESS: 'Upload file successfully',
   REFRESH_TOKEN_IS_CREATED: 'Refresh token is created successfully',
   THIS_PROPERTY_IS_REQUIRED: 'This property is required',
-  USER_ID_NOT_VALID : 'User Id is invalid'
+  USER_ID_NOT_VALID: 'User Id is invalid'
 } as const
 
 export const tweetsMessages = {
@@ -83,43 +83,37 @@ export const tweetsMessages = {
   URL_MUST_IS_STRING: 'Url must be a string',
   THIS_MEDIA_TYPE_IS_NOT_VALID: 'Media type is invalid',
   CREATE_BOOKMARK_SUCCESS: 'Create bookmark successfully',
-  BOOKMARK_IS_ALREADY_EXIST : 'Bookmark  already exists',
-  DELETE_BOOKMARK_SUCCESS : 'Delete bookmark successfully',
-  THERE_IS_NO_BOOKMARK : 'Bookmark havenot been created',
-  LIKES_IS_ALREADY_EXIST : 'Like  already exists',
-  THERE_IS_NO_LIKE : 'Like havenot been created',
-  UNLIKE_SUCCESS : 'Unlike successfully',
+  BOOKMARK_IS_ALREADY_EXIST: 'Bookmark  already exists',
+  DELETE_BOOKMARK_SUCCESS: 'Delete bookmark successfully',
+  THERE_IS_NO_BOOKMARK: 'Bookmark havenot been created',
+  LIKES_IS_ALREADY_EXIST: 'Like  already exists',
+  THERE_IS_NO_LIKE: 'Like havenot been created',
+  UNLIKE_SUCCESS: 'Unlike successfully',
   CREATE_LIKE_SUCCESS: 'Like successfully',
-  DELETE_TWEET_SUCCESS : 'Delete tweet successfully',
+  DELETE_TWEET_SUCCESS: 'Delete tweet successfully',
   CREATE_TWEET_SUCCESS: 'Create tweet successfully',
-  TWEET_IS_NOT_EXIST : 'Tweet does not exist',
-  PARENT_TWEET_NOT_EXIST : 'Parent tweet does not exist',
-  GET_TWEET_DETAIL_SUCCESS : 'Get tweet detail successfully',
-  TWEET_ID_INVALID : 'Tweet Id is invalid',
-  TWEET_ID_NOT_EXIST : 'Tweet Id does not exist',
-  TWEET_ID_IS_REQUIRED : 'Tweet Id is required',
-  USER_NOT_LOGGIN : 'You havenot logged in',
-  USER_NOT_IN_CIRCLE_OF_OWNER_OF_TWEET : 'User is not in the circle of the owner of this tweet',
-  CREATE_TWEET_CIRCLE_SUCCESS :'Add user to Tweet Circle successfully',
-  USER_ALREADY_IN_CIRCLE : 'User is already in Circle',
-  DELETE_TWEET_CIRCLE_SUCCESS : 'Delete user in circle successfully',
-  USER_NOT_IN_CIRCLE : 'User is not in circle',
-  GET_CHILDREN_TWEET_SUCCESS : 'Get tweet children successfully',
-  GET_NEW_FEED_SUCCESS : 'Get new feed successfully'
-
-
-
-
-
+  TWEET_IS_NOT_EXIST: 'Tweet does not exist',
+  PARENT_TWEET_NOT_EXIST: 'Parent tweet does not exist',
+  GET_TWEET_DETAIL_SUCCESS: 'Get tweet detail successfully',
+  TWEET_ID_INVALID: 'Tweet Id is invalid',
+  TWEET_ID_NOT_EXIST: 'Tweet Id does not exist',
+  TWEET_ID_IS_REQUIRED: 'Tweet Id is required',
+  USER_NOT_LOGGIN: 'You havenot logged in',
+  USER_NOT_IN_CIRCLE_OF_OWNER_OF_TWEET: 'User is not in the circle of the owner of this tweet',
+  CREATE_TWEET_CIRCLE_SUCCESS: 'Add user to Tweet Circle successfully',
+  USER_ALREADY_IN_CIRCLE: 'User is already in Circle',
+  DELETE_TWEET_CIRCLE_SUCCESS: 'Delete user in circle successfully',
+  USER_NOT_IN_CIRCLE: 'User is not in circle',
+  GET_CHILDREN_TWEET_SUCCESS: 'Get tweet children successfully',
+  GET_NEW_FEED_SUCCESS: 'Get new feed successfully'
 } as const
 
 export const searchMessages = {
-  SUCCESS : 'Success'
+  SUCCESS: 'Success'
 }
 export const conversationMessages = {
-  GET_CONVERSATION_SUCCESS : 'Get conversations successfully',
-  RECEIVER_ID_IS_REQUIRED : 'Receiver id is required',
-  RECEIVER_ID_INVALID :'Receiver id is invalid',
-  RECEIVER_ID_NOT_EXIST : 'Reciver id does not exist'
-
+  GET_CONVERSATION_SUCCESS: 'Get conversations successfully',
+  RECEIVER_ID_IS_REQUIRED: 'Receiver id is required',
+  RECEIVER_ID_INVALID: 'Receiver id is invalid',
+  RECEIVER_ID_NOT_EXIST: 'Reciver id does not exist'
 }

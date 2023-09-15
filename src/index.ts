@@ -68,11 +68,7 @@ const swaggerDocument = YAML.parse(file)
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 //Xu li cors
-app.use(
-  cors({
-    origin: isProduction ? process.env.CLIENT_URL : '*'
-  })
-)
+app.use(cors({}))
 
 //Security wwith helmet
 app.use(helmet())

@@ -130,7 +130,7 @@ class UsersServices {
       { _id: new ObjectId(user_id) },
       { $set: { email_verify_token: email_verify_token, updated_at: new Date() } }
     )
-    await sendVerifyEmail(payload.email, email_verify_token)
+    // await sendVerifyEmail(payload.email, email_verify_token)
 
     return { newUser, refresh_Token, access_Token, email_verify_token }
   }

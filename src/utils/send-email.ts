@@ -75,22 +75,20 @@ export const sendVerifyEmail = async (
   email_verify_token: string,
   template: string = verifyEmailTemplate
 ) => {
-  
-     return sendEmail(
-      toAddress,
-      'Verify your email',
-      template
-        .replace('{{title}}', 'Please verify your email')
-        .replace('{{content}}', 'Click the link below to verify your email')
-        .replace('{{titleLink}}', 'Verify')
-        .replace('{{link}}', `${process.env.CLIENT_URL}/verify-email?token=${email_verify_token}`)
-    )
-  
-    // throw new ErrorWithStatus({
-    //   message: 'Send Email Verify Token Fail. Please resend verify email after you register',
-    //   status: httpStatusCode.INTERNAL_SERVER_ERROR
-    // })
-  
+  return sendEmail(
+    toAddress,
+    'Verify your email',
+    template
+      .replace('{{title}}', 'Please verify your email')
+      .replace('{{content}}', 'Click the link below to verify your email')
+      .replace('{{titleLink}}', 'Verify')
+      .replace('{{link}}', `${process.env.CLIENT_URL}/verify-email?token=${email_verify_token}`)
+  )
+
+  // throw new ErrorWithStatus({
+  //   message: 'Send Email Verify Token Fail. Please resend verify email after you register',
+  //   status: httpStatusCode.INTERNAL_SERVER_ERROR
+  // })
 }
 
 export const sendForgotPasswordEmail = (
