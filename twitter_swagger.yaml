@@ -234,7 +234,7 @@ paths:
         - auth
       summary: Đăng xuất
       description: Đăng xuất vào hệ thống
-      operationId: login
+      operationId: logout
       security:
         - bearAuth: []
       requestBody:
@@ -317,7 +317,7 @@ paths:
         - auth
       summary: Gửi lại email xác minh
       description: Xác minh email
-      operationId: verify-email
+      operationId: resend-verify-email
 
       security:
         - bearAuth: []
@@ -712,7 +712,7 @@ paths:
         - users
       summary: Đăng ảnh
       description: 'Đăng ảnh'
-      operationId: uploadFile
+      operationId: uploadFile-image
       security:
         - bearAuth: []
 
@@ -773,7 +773,7 @@ paths:
         - users
       summary: Đăng video
       description: 'Đăng video'
-      operationId: uploadFile
+      operationId: uploadFile-video
       security:
         - bearAuth: []
 
@@ -937,11 +937,12 @@ paths:
         - tweets
       summary: Lấy thông tin tweet
       description: Lấy thông tin tweet
+
       operationId: get-user-tweet
       security:
         - bearAuth: []
       parameters:
-        - name: tweetId
+        - name: tweetid
           in: path
           description: ID of a tweet
           required: true
@@ -974,6 +975,47 @@ paths:
                   message:
                     type: string
                     example: You need to login to get access
+  /tweets/{delete_tweetid}:
+    get:
+      tags:
+        - tweets
+      summary: Lấy thông tin tweet
+      description: Lấy thông tin tweet
+
+      operationId: get-user-tweet
+      security:
+        - bearAuth: []
+      parameters:
+        - name: delete_tweetid
+          in: path
+          description: ID of a tweet
+          required: true
+          example: '64c0f1fba5e58663dc2c058b'
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Delete tweet detail successfully
+
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: You need to login to get access
   /tweets/bookmark/{tweetid}:
     post:
       tags:
@@ -984,7 +1026,7 @@ paths:
       security:
         - bearAuth: []
       parameters:
-        - name: tweetId
+        - name: tweetid
           in: path
           description: ID of a tweet
           required: true
@@ -1098,7 +1140,7 @@ paths:
       security:
         - bearAuth: []
       parameters:
-        - name: tweetId
+        - name: tweetid
           in: path
           description: ID of a tweet
           required: true
@@ -1267,9 +1309,9 @@ paths:
         - tweets
       summary: Xóa user khỏi circle tweet
       description: Xóa user khỏi circle tweet
-      operationId: tweet-circle
+      operationId: delete-tweet-circle
       parameters:
-        - name: tweetId
+        - name: tweetid
           in: path
           description: ID of a tweet
           required: true
@@ -1318,7 +1360,7 @@ paths:
                   message:
                     type: string
                     example: This person is not in your circle tweet
-  /tweets/{tweetid}/children?type={type}&limit={limit}&page={page}:
+  /tweets/{tweetid}/children:
     get:
       tags:
         - tweets
@@ -1326,7 +1368,7 @@ paths:
       description: Lấy thông tin tweet con
       operationId: tweet-children
       parameters:
-        - name: tweetId
+        - name: tweetid
           in: path
           description: ID of a tweet
           required: true
@@ -1334,21 +1376,21 @@ paths:
           schema:
             type: string
         - name: type
-          in: path
+          in: query
           description: Type of a tweet
           required: true
           example: '2'
           schema:
             type: string
         - name: limit
-          in: path
+          in: query
           description: Limit of a page
           required: true
           example: '5'
           schema:
             type: string
         - name: page
-          in: path
+          in: query
           description: Number page
           required: true
           example: '2'
@@ -1410,23 +1452,23 @@ paths:
                   message:
                     type: string
                     example: Tweet Id is invalid
-  /tweets/new_feed/user?limit={limit}&page={page}:
+  /tweets/new_feed/user:
     get:
       tags:
-        - conversations
+        - tweets
       summary: Lấy thông tin new feed
       description: Lấy thông tin new feed
       operationId: new-feed
       parameters:
         - name: limit
-          in: path
+          in: query
           description: Limit of a page
           required: true
           example: '5'
           schema:
             type: string
         - name: page
-          in: path
+          in: query
           description: Number page
           required: true
           example: '1'
@@ -1478,14 +1520,14 @@ paths:
                       page:
                         type: object
                         example: '{"type": "field","value": "a","msg": "Invalid value","path": "page","location": "query"}'
-  /chat/receiver/{receiverid}?limit={limit}&page={page}:
+  /chat/receiver/{receiverid}:
     get:
       tags:
-        - tweets
-      summary: Lấy thông tin new feed
-      description: Lấy thông tin new feed
+        - conversations
+      summary: Lấy thông tin conversation
+      description: Lấy thông tin conversation
 
-      operationId: new-feed
+      operationId: conversations
       parameters:
         - name: receiverid
           in: path
@@ -1495,14 +1537,14 @@ paths:
           schema:
             type: string
         - name: limit
-          in: path
+          in: query
           description: Limit of a page
           required: true
           example: '5'
           schema:
             type: string
         - name: page
-          in: path
+          in: query
           description: Number page
           required: true
           example: '1'
@@ -1528,7 +1570,8 @@ paths:
                     properties:
                       conversations:
                         type: array
-                        $ref: '#/components/schemas/ConversationDetailResponse'
+                        items:
+                          $ref: '#/components/schemas/ConversationDetailResponse'
 
         '401':
           description: Unauthorized

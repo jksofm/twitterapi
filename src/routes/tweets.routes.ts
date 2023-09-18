@@ -25,7 +25,13 @@ const tweetsRouter = Router()
 
 ///Twweet
 tweetsRouter.post('/', accessTokenValidator, verifedUserValidator, validatorCreateTweet, createTweetController)
-tweetsRouter.post('/:tweetId', accessTokenValidator, verifedUserValidator, validatorCreateTweet, deleteTweetController)
+tweetsRouter.delete(
+  '/:tweetId',
+  accessTokenValidator,
+  verifedUserValidator,
+  validatorCreateTweet,
+  deleteTweetController
+)
 
 tweetsRouter.get(
   '/:tweetId',
@@ -37,7 +43,13 @@ tweetsRouter.get(
 
   getTweetDetailController
 )
-tweetsRouter.get('/new_feed/user',paginationValidator, accessTokenValidator, verifedUserValidator, getNewFeedController)
+tweetsRouter.get(
+  '/new_feed/user',
+  paginationValidator,
+  accessTokenValidator,
+  verifedUserValidator,
+  getNewFeedController
+)
 
 // Query : {limit : number , page : number , tweet_tpe}
 tweetsRouter.get(

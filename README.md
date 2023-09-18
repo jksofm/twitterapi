@@ -53,5 +53,5 @@
 - Websocket: Socket.io
 - TypeODM: MongoDB Node.js Driver
 - Test API: Postman
-- Deployment: Docker & EC2 (AWS)
+- Deployment: VPS,PM2,Nginx & EC2 (AWS)
 - API Documentation: Swagger

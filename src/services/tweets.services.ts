@@ -77,6 +77,11 @@ class TweetsServices {
     await DB.bookmarks.deleteMany({ tweet_id: new ObjectId(tweet_id) })
 
     await DB.tweets.deleteOne({ _id: new ObjectId(tweet_id) })
+    //Xóa tweet con
+
+    if (checkTweetExist.type === TweetType.Tweet) {
+      await DB.tweets.deleteMany({ parent_id: new ObjectId(tweet_id) })
+    }
   }
   async getDetailTweet(tweet_id: ObjectId) {
     const result = await DB.tweets.findOne({ _id: tweet_id })
@@ -291,6 +296,7 @@ class TweetsServices {
               _id: new ObjectId(user_id)
             }
           },
+          //Map qua followers tìm những user mình đang theo dõi
           {
             $lookup: {
               from: 'followers',
@@ -299,6 +305,7 @@ class TweetsServices {
               as: 'id_arrays_currently_followed_by_user'
             }
           },
+          /// Chỉ lấy field id
           {
             $addFields: {
               id_arrays_currently_followed_by_user: {
@@ -318,9 +325,8 @@ class TweetsServices {
         ])
         .toArray()
     )[0].id_arrays_currently_followed_by_user
-    ///Lay những tweet của user và của người user followd
+    ///Lay những tweet của user và của người user followed , check trong tweetCircle
     const id_Array = [...id_array_followed_by_user, new ObjectId(user_id)]
-    console.log(id_Array.includes(new ObjectId('64c35547b23159b4becf2af6')))
 
     const tweets = await DB.tweets
       .aggregate([
@@ -363,11 +369,7 @@ class TweetsServices {
                   },
                   {
                     users_in_circle: {
-                      $in: [
-                        new ObjectId('64c35547b23159b4becf2ae9'),
-                        new ObjectId('64c35547b23159b4becf2af9'),
-                        new ObjectId('64c35547b23159b4becf2af4')
-                      ]
+                      $in: id_Array
                     }
                   }
                 ]
@@ -529,12 +531,12 @@ class TweetsServices {
       .toArray()
 
     /// Tang view cho children
-    const idsArray = tweets.map((tweet) => tweet._id as ObjectId)
+    const idsArrayTweet = tweets.map((tweet) => tweet._id as ObjectId)
 
     DB.tweets.updateMany(
       {
         _id: {
-          $in: idsArray
+          $in: idsArrayTweet
         }
       },
       {
@@ -591,11 +593,7 @@ class TweetsServices {
                     },
                     {
                       users_in_circle: {
-                        $in: [
-                          new ObjectId('64c35547b23159b4becf2ae9'),
-                          new ObjectId('64c35547b23159b4becf2af9'),
-                          new ObjectId('64c35547b23159b4becf2af4')
-                        ]
+                        $in: id_Array
                       }
                     }
                   ]
