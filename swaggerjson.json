@@ -1,0 +1,2715 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Swagger Twitter - OpenAPI 3.0",
+    "description": "This is a sample Twitter Server based on the OpenAPI 3.0 specification.  You can find out more about\nSwagger at [https://swagger.io](https://swagger.io)",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.11"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "https://my-twitter-clone-api.io.vn/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Các API liên quan đến Authentication và Authorization",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "users",
+      "description": "Các API liên quan đến Users",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "tweets",
+      "description": "Các API liên quan tweets",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "conversations",
+      "description": "Các API liên quan conversations",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "paths": {
+    "/users/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Đăng nhập",
+        "description": "Đăng nhập vào hệ thống",
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Login successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/SuccessAuthentication"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email or Password is not correct"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation error"
+                    },
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "object",
+                          "example": "{\"type\": \"field\",\"value\": \"lequochuypy1998\",\"msg\": \"Email is invalid\",\"path\": \"email\",\"location\": \"body\"}"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/register": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Đăng ký",
+        "description": "Đăng nhập vào hệ thống",
+        "operationId": "register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Login successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "newUser": {
+                          "type": "object",
+                          "properties": {
+                            "acknowledged": {
+                              "type": "boolean"
+                            },
+                            "insertedId": {
+                              "type": "string",
+                              "example": "6503dabe22ebbb85936e1dcc"
+                            }
+                          }
+                        },
+                        "refresh_token": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTAzZGFiZTIyZWJiYjg1OTM2ZTFkY2MiLCJ0b2tlbl90eXBlIjoxLCJpYXQiOjE2OTQ3NTE0MjIsImV4cCI6MTcwMzM5MTQyMn0.WAglv5SToZIIVoj__tb1DjXTZRzQB4oKLd3EJJde6rg"
+                        },
+                        "access_token": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTAzZGFiZTIyZWJiYjg1OTM2ZTFkY2MiLCJ0b2tlbl90eXBlIjowLCJpYXQiOjE2OTQ3NTE0MjIsImV4cCI6MTY5NDgzNzgyMn0.RXS_PP2YO9qL6QEo3LqVNHwgq6j9byKVI4uJgi9XNnU"
+                        },
+                        "email_verify_token": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTAzZGFiZTIyZWJiYjg1OTM2ZTFkY2MiLCJ0b2tlbl90eXBlIjozLCJpYXQiOjE2OTQ3NTE0MjIsImV4cCI6MTY5NTM1NjIyMn0.8dcfxQuQKMU0X7NdTmaDwa7BlD7WPpQQ0nA4euM1W20"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation error"
+                    },
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "object",
+                          "example": "{\"type\": \"field\",\"value\": \"lequochuypy1998\",\"msg\": \"Email is invalid\",\"path\": \"email\",\"location\": \"body\"}"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/get-my-profile": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Lấy thông tin người dùng",
+        "description": "Lấy thông tin người dùng",
+        "operationId": "Get My Profile",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Get my profile successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/UserInfo"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/refresh-token": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Cập nhật access_token",
+        "description": "Cập nhật access_token",
+        "operationId": "Get access_token",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Login successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/SuccessAuthentication"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Refresh token is required"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Đăng xuất",
+        "description": "Đăng xuất vào hệ thống",
+        "operationId": "logout",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Logout successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Refresh token is required"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/verify-email": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Xác minh email",
+        "description": "Xác minh email",
+        "operationId": "verify-email",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyEmailBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessAuthentication"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email verify token does not exist"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email is already verifed before"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/resend-verify-email": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Gửi lại email xác minh",
+        "description": "Xác minh email",
+        "operationId": "resend-verify-email",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Resend email verify token successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "email_verify_token": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGJkZDc0ODM2Y2E4YTg1NTA1OTNkM2IiLCJ0b2tlbl90eXBlIjozLCJpYXQiOjE2OTQ3NTY1NjUsImV4cCI6MTY5NTM2MTM2NX0.mmcJGHyt18v9UscmlxcDg4uOGzEcjzXjJYfhq_Ipz9k"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/create-forgot-password-token": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Gửi lại email xác minh quên mật khẩu",
+        "description": "Xác minh quên mật khẩu",
+        "operationId": "forgot-password",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Send forgot password token successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "forgot_password_token": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGJkZDc0ODM2Y2E4YTg1NTA1OTNkM2IiLCJ0b2tlbl90eXBlIjozLCJpYXQiOjE2OTQ3NTY1NjUsImV4cCI6MTY5NTM2MTM2NX0.mmcJGHyt18v9UscmlxcDg4uOGzEcjzXjJYfhq_Ipz9k"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/verify-forgot-password-token": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Xác minh email quên mật khẩu",
+        "description": "Xác minh email quên mật khẩu",
+        "operationId": "verify-forgot-password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "forgot_password_token": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGJkZDc0ODM2Y2E4YTg1NTA1OTNkM2IiLCJ0b2tlbl90eXBlIjoyLCJpYXQiOjE2OTQ3NTkwNTUsImV4cCI6MTY5NDc1OTM1NX0._Mu2YRE06HZWz8feqDZ7IQr8Aje-8kGd_ZMS_JpkZTs"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Verify forgot password token successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/SuccessAuthentication"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Forgot password token is required"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/update-password": {
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Đổi mật khẩu",
+        "description": "Đổi mật khẩu",
+        "operationId": "update-password",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "new_password": {
+                    "type": "string",
+                    "example": "123456"
+                  },
+                  "confirm_new_password": {
+                    "type": "string",
+                    "example": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Update password successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/SuccessAuthentication"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Forgot password token is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation error"
+                    },
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "confirm_new_password": {
+                          "type": "object",
+                          "example": "{\"type\": \"field\",\"value\": \"1234567\",\"msg\": \"Confirm password is not match.\",\"path\": \"confirm_new_password\",\"location\": \"body\"}"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/update-my-profile": {
+      "patch": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Cập nhật thông tin",
+        "description": "Cập nhật thông tin",
+        "operationId": "update-my-profile",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bio": {
+                    "type": "string",
+                    "example": "My name is Huy."
+                  },
+                  "website": {
+                    "type": "string",
+                    "example": "https://google.com"
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": "huy1998"
+                  },
+                  "location": {
+                    "type": "string",
+                    "example": "TP Ho Chi Minh"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Update my profile successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/UserInfo"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User is currently not verified"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Lấy thông tin user",
+        "description": "Lấy thông tin user",
+        "operationId": "get-user-profile",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of a user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Get user profile successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/UserInfo"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User is not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/follow": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Theo dõi user",
+        "description": "Theo dõi user",
+        "operationId": "follow-user",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "followed_user_id": {
+                    "type": "string",
+                    "example": "64c35547b23159b4becf2af6"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Follow successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation error"
+                    },
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "followed_user_id": {
+                          "type": "object",
+                          "example": "{\"type\": \"field\",\"value\": \"64c35547b23159b4becf2a6\",\"msg\": \"Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer\",\"path\": \"followed_user_id\",\"location\": \"body\"}"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/unfollow": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Bỏ theo dõi user",
+        "description": "theo dõi user",
+        "operationId": "unfollow-user",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "followed_user_id": {
+                    "type": "string",
+                    "example": "64c35547b23159b4becf2af6"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Unfollow successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation error"
+                    },
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "followed_user_id": {
+                          "type": "object",
+                          "example": "{\"type\": \"field\",\"value\": \"64c35547b23159b4becf2a6\",\"msg\": \"Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer\",\"path\": \"followed_user_id\",\"location\": \"body\"}"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/media/upload-image": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Đăng ảnh",
+        "description": "Đăng ảnh",
+        "operationId": "uploadFile-image",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Upload file successfully"
+                    },
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "example": "https://twitter-clone-2023-ap-southrest-1.s3.ap-southeast-1.amazonaws.com/images/64bdd74836ca8a8550593d3b/6261ae6ea7fac4de48309fa00.jpg"
+                          },
+                          "type": {
+                            "type": "number",
+                            "enum": [
+                              "image",
+                              "video"
+                            ],
+                            "example": 0
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "File is empty"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/media/upload-video": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Đăng video",
+        "description": "Đăng video",
+        "operationId": "uploadFile-video",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Upload file successfully"
+                    },
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "example": "https://twitter-clone-2023-ap-southrest-1.s3.ap-southeast-1.amazonaws.com/videos%2F64bdd74836ca8a8550593d3b%2F8081a485df0c08b2c4a149700.mp4"
+                          },
+                          "type": {
+                            "type": "number",
+                            "enum": [
+                              "image",
+                              "video"
+                            ],
+                            "example": 1
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "File is empty"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tweets": {
+      "post": {
+        "tags": [
+          "tweets"
+        ],
+        "summary": "Đăng tweet",
+        "description": "Mô tả tweets:\n\n- Tweet có 4 loại : Tweet | Retweet | Comment | QuoteTweet.\n\n- Tweet có thể chứa text, hashtags, metions, ảnh, video.\n\n\n- Tweet có thể hiển thị cho everyone hoặc Twitter Circle.\n\n\n- Tweet có thể quy định người reply (everyone, người mà chúng ta follow , người chúng ta metion).\n\n- Tweet sẽ có nested tweet, nghĩa là tweet có thể chứa tweet con bên trong.\n\n- Parent_id là id của tweet gốc.\n- Nếu là tweet bình thường thì sẽ có `content` là string. Còn nếu là retweet thì sẽ không có `content` mà chỉ có `parent_id` thôi, lúc này có thể cho content là `'` hoặc `null`, như mình phân tích ở những bài trước thì mình thích để `'` hơn, đỡ phải phân tích trường hợp `null`. Vậy nên `content` có thể là `string`.\n> Nếu là ' thì sẽ chiếm bộ nhớ hơn là null, nhưng điều này là không đáng kể so với lợi ích nó đem lại\n- `audience` đại diện cho tính riêng tư của tweet. Ví dụ tweet có thể là public cho mọi người xem hoặc chỉ cho nhóm người nhất định. Vậy nên `visibility` có thể là `TweetAudience` enum.\n- `type` đại diện cho loại tweet. Ví dụ tweet, retweet, quote tweet.\n\n- `hashtag` là mảng chứa ObjectId của các hashtag. Vì mỗi tweet có thể có nhiều hashtag. Vậy nên `hashtag` có thể là `ObjectId[]`.\n\n- `mentions` là mảng chứa ObjectId của các user được mention. Vì mỗi tweet có thể có nhiều user được mention. Vậy nên `mentions` có thể là `ObjectId[]`.\n\n- `media` là mảng chứa ObjectId của các media. Vì mỗi tweet chỉ có thể có 1 vài media. Nếu upload ảnh thì sẽ không upload được video và ngược lại. Vậy nên `media` có thể là `Media[]`.\n\n\n\n\nLượt view chia ra làm 2 loại là `guest_views` là số lượng lượt xem của tweet từ người dùng không đăng nhập và `user_views` là dành cho đã đăng nhập.",
+        "operationId": "Create tweet",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTweetRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Create tweet successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "acknowledged": {
+                          "type": "boolean"
+                        },
+                        "insertedId": {
+                          "type": "string",
+                          "example": "6503dabe22ebbb85936e1dcc"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation error"
+                    },
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "parent_id": {
+                          "type": "object",
+                          "example": "{\"type\": \"field\",\"value\": \"64c0f1fba5e58663dc2c058b\",\"msg\": \"Parent id must be null\",\"path\": \"parent_id\",\"location\": \"body\"}"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tweets/{tweetid}": {
+      "get": {
+        "tags": [
+          "tweets"
+        ],
+        "summary": "Lấy thông tin tweet",
+        "description": "Lấy thông tin tweet",
+        "operationId": "get-user-tweet",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "tweetid",
+            "in": "path",
+            "description": "ID of a tweet",
+            "required": true,
+            "example": "64c0f1fba5e58663dc2c058b",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Get tweet detail successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/TweetDetailResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tweets/{delete_tweetid}": {
+      "get": {
+        "tags": [
+          "tweets"
+        ],
+        "summary": "Lấy thông tin tweet",
+        "description": "Lấy thông tin tweet",
+        "operationId": "delete-user-tweet",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "delete_tweetid",
+            "in": "path",
+            "description": "ID of a tweet",
+            "required": true,
+            "example": "64c0f1fba5e58663dc2c058b",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Delete tweet detail successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tweets/bookmark/{tweetid}": {
+      "post": {
+        "tags": [
+          "tweets"
+        ],
+        "summary": "Tạo bookmark",
+        "description": "Tạo bookmark",
+        "operationId": "create-bookmark",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "tweetid",
+            "in": "path",
+            "description": "ID of a tweet",
+            "required": true,
+            "example": "64c0f1fba5e58663dc2c058b",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Create bookmark successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "acknowledged": {
+                          "type": "boolean"
+                        },
+                        "insertedId": {
+                          "type": "string",
+                          "example": "6503dabe22ebbb85936e1dcc"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bookmark  already exists"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tweets/bookmark/{tweetid_delete}": {
+      "delete": {
+        "tags": [
+          "tweets"
+        ],
+        "summary": "Xóa bookmark",
+        "description": "Xóa bookmark",
+        "operationId": "delete-bookmark",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "tweetid_delete",
+            "in": "path",
+            "description": "ID of a tweet",
+            "required": true,
+            "example": "64c0f1fba5e58663dc2c058b",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Delete bookmark successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "acknowledged": {
+                          "type": "boolean"
+                        },
+                        "insertedId": {
+                          "type": "string",
+                          "example": "6503dabe22ebbb85936e1dcc"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bookmark doesnot exist"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tweets/like/{tweetid}": {
+      "post": {
+        "tags": [
+          "tweets"
+        ],
+        "summary": "Tạo like",
+        "description": "Tạo like",
+        "operationId": "create-like",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "tweetid",
+            "in": "path",
+            "description": "ID of a tweet",
+            "required": true,
+            "example": "64c0f1fba5e58663dc2c058b",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Like bookmark successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "acknowledged": {
+                          "type": "boolean"
+                        },
+                        "insertedId": {
+                          "type": "string",
+                          "example": "6503dabe22ebbb85936e1dcc"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You already like this tweet"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tweets/like/{tweetid_delete}": {
+      "delete": {
+        "tags": [
+          "tweets"
+        ],
+        "summary": "Tạo like",
+        "description": "Tạo like",
+        "operationId": "delete-like",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "tweetid_delete",
+            "in": "path",
+            "description": "ID of a tweet",
+            "required": true,
+            "example": "64c0f1fba5e58663dc2c058b",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Unlike bookmark successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "acknowledged": {
+                          "type": "boolean"
+                        },
+                        "insertedId": {
+                          "type": "string",
+                          "example": "6503dabe22ebbb85936e1dcc"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You havenot liked this tweet yet"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tweets/tweet_circle/create": {
+      "post": {
+        "tags": [
+          "tweets"
+        ],
+        "summary": "Thêm user vào circle tweet",
+        "description": "Thêm user vào circle tweet",
+        "operationId": "tweet-circle",
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_id_in_circle": {
+                    "type": "string",
+                    "example": "64c35547b23159b4becf2af9"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Add user to Tweet Circle successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "acknowledged": {
+                          "type": "boolean"
+                        },
+                        "insertedId": {
+                          "type": "string",
+                          "example": "6503dabe22ebbb85936e1dcc"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You already add this user to circle"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tweets/tweet_circle/{tweetid}": {
+      "delete": {
+        "tags": [
+          "tweets"
+        ],
+        "summary": "Xóa user khỏi circle tweet",
+        "description": "Xóa user khỏi circle tweet",
+        "operationId": "delete-tweet-circle",
+        "parameters": [
+          {
+            "name": "tweetid",
+            "in": "path",
+            "description": "ID of a tweet",
+            "required": true,
+            "example": "64c0f1fba5e58663dc2c058b",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Delete user in circle successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "acknowledged": {
+                          "type": "boolean"
+                        },
+                        "insertedId": {
+                          "type": "string",
+                          "example": "64c35547b23159b4becf2af9"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "This person is not in your circle tweet"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tweets/{tweetid}/children": {
+      "get": {
+        "tags": [
+          "tweets"
+        ],
+        "summary": "Lấy thông tin tweet con",
+        "description": "Lấy thông tin tweet con",
+        "operationId": "tweet-children",
+        "parameters": [
+          {
+            "name": "tweetid",
+            "in": "path",
+            "description": "ID of a tweet",
+            "required": true,
+            "example": "64c0f1fba5e58663dc2c058b",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Type of a tweet",
+            "required": true,
+            "example": "2",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit of a page",
+            "required": true,
+            "example": "5",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Number page",
+            "required": true,
+            "example": "2",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Get tweet children successfully"
+                    },
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TweetDetailResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Tweet Id is invalid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation error"
+                    },
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "object",
+                          "example": "{\"type\": \"field\",\"value\": \"6\",\"msg\": \"Invalid type\",\"path\": \"type\",\"location\": \"body\"}"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tweets/new_feed/user": {
+      "get": {
+        "tags": [
+          "tweets"
+        ],
+        "summary": "Lấy thông tin new feed",
+        "description": "Lấy thông tin new feed",
+        "operationId": "new-feed",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit of a page",
+            "required": true,
+            "example": "5",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Number page",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Get new feed successfully"
+                    },
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TweetDetailResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation error"
+                    },
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "object",
+                          "example": "{\"type\": \"field\",\"value\": \"a\",\"msg\": \"Invalid value\",\"path\": \"page\",\"location\": \"query\"}"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chat/receiver/{receiverid}": {
+      "get": {
+        "tags": [
+          "conversations"
+        ],
+        "summary": "Lấy thông tin conversation",
+        "description": "Lấy thông tin conversation",
+        "operationId": "conversations",
+        "parameters": [
+          {
+            "name": "receiverid",
+            "in": "path",
+            "description": "Limit of a page",
+            "required": true,
+            "example": "64c6036173734f57925db242",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit of a page",
+            "required": true,
+            "example": "5",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Number page",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Get new feed successfully"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "conversations": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ConversationDetailResponse"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You need to login to get access"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation error"
+                    },
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "object",
+                          "example": "{\"type\": \"field\",\"value\": \"a\",\"msg\": \"Invalid value\",\"path\": \"page\",\"location\": \"query\"}"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginBody": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "lequochuypy1998@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "Elegant1998!"
+          }
+        }
+      },
+      "LogoutBody": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTAzZGFiZTIyZWJiYjg1OTM2ZTFkY2MiLCJ0b2tlbl90eXBlIjowLCJpYXQiOjE2OTQ3NTE0MjIsImV4cCI6MTY5NDgzNzgyMn0.RXS_PP2YO9qL6QEo3LqVNHwgq6j9byKVI4uJgi9XNnU"
+          }
+        }
+      },
+      "VerifyEmailBody": {
+        "type": "object",
+        "properties": {
+          "email_verify_token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTAzZGFiZTIyZWJiYjg1OTM2ZTFkY2MiLCJ0b2tlbl90eXBlIjowLCJpYXQiOjE2OTQ3NTE0MjIsImV4cCI6MTY5NDgzNzgyMn0.RXS_PP2YO9qL6QEo3LqVNHwgq6j9byKVI4uJgi9XNnU"
+          }
+        }
+      },
+      "RegisterBody": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "huy123"
+          },
+          "date_of_birth": {
+            "type": "string",
+            "format": "ISO8601"
+          },
+          "email": {
+            "type": "string",
+            "example": "lequochuypy1998@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": 123456
+          },
+          "confirm_password": {
+            "type": "string",
+            "example": 123456
+          }
+        }
+      },
+      "SuccessAuthentication": {
+        "type": "object",
+        "properties": {
+          "refresh_token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGJkZDc0ODM2Y2E4YTg1NTA1OTNkM2IiLCJ0b2tlbl90eXBlIjoxLCJpYXQiOjE2OTQwNzY2MTYsImV4cCI6MTcwMjcxNjYxNn0.X1EXw3d29flIbeXM7LvmlEjq1SqsSmZZ02IAzXsvDjY"
+          },
+          "access_token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGJkZDc0ODM2Y2E4YTg1NTA1OTNkM2IiLCJ0b2tlbl90eXBlIjowLCJpYXQiOjE2OTQwNzY2MTYsImV4cCI6MTY5NDE2MzAxNn0.Sjo-LZQ_ctkJghLntK9llZketR1MUkMg6E7LZAn2qo0"
+          }
+        }
+      },
+      "UserInfo": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64bdd74836ca8a8550593d3b"
+          },
+          "name": {
+            "type": "string",
+            "example": "Le Quoc Huy"
+          },
+          "email": {
+            "type": "string",
+            "example": "lequochuypy1998@gmail.com"
+          },
+          "verify": {
+            "$ref": "#/components/schemas/UserVerifyStatus"
+          },
+          "bio": {
+            "type": "string",
+            "description": "Giới thiệu bản thân",
+            "example": "Tôi là Huy.Tôi là một lập trình viên."
+          },
+          "location": {
+            "type": "string",
+            "example": "15 Hoàng Quốc Việt, Quận 7",
+            "description": "Địa chỉ"
+          },
+          "webstie": {
+            "type": "string",
+            "example": "https://facebook.com/jksofm",
+            "description": "Website cá nhân"
+          },
+          "username": {
+            "type": "string",
+            "example": "@huy1998"
+          },
+          "avatar": {
+            "type": "string",
+            "example": "https://i.pinimg.com/236x/ba/4e/fb/ba4efb6ee1537e8970d3d17698b3c18d.jpg",
+            "description": "Ảnh đại diện"
+          },
+          "cover_photo": {
+            "type": "string",
+            "example": "https://i.pinimg.com/236x/ba/4e/fb/ba4efb6ee1537e8970d3d17698b3c18d.jpg",
+            "description": "Ảnh nền"
+          },
+          "date_of_birth": {
+            "type": "string",
+            "format": "ISO8601",
+            "example": "2023-07-24T01:43:36.085Z"
+          }
+        }
+      },
+      "UserVerifyStatus": {
+        "type": "number",
+        "enum": [
+          "Unverified",
+          "Verified",
+          "Banned"
+        ],
+        "example": 1
+      },
+      "CreateTweetRequestBody": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "{\"Tweet\" : 0; \"Retweet\" : 1,\"Comment\" : 2,\"QuoteTwwet\": 3}",
+            "type": "number",
+            "enum": [
+              "Tweet",
+              "Retweet",
+              "Comment",
+              "QuoteTweet"
+            ],
+            "example": 2
+          },
+          "audience": {
+            "description": "{\"Everyone\": 0 , \"TweetCircle\" : 1}",
+            "type": "number",
+            "enum": [
+              "Everyone",
+              "TweetCircle"
+            ],
+            "example": 1
+          },
+          "parent_id": {
+            "type": "string",
+            "example": "64c0f1fba5e58663dc2c058b"
+          },
+          "media": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "https://twitter-clone-2023-ap-southrest-1.s3.ap-southeast-1.amazonaws.com/images/64bdd74836ca8a8550593d3b/6261ae6ea7fac4de48309fa00.jpg"
+            }
+          },
+          "mentions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "UserId",
+              "example": "64ba2615b8d626c0589e0e8b"
+            }
+          },
+          "hashtags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "64ba2615b8d626c0589e0e8b"
+            }
+          }
+        }
+      },
+      "TweetDetailResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64bb4f2725fccab1e42904c8"
+          },
+          "content": {
+            "type": "string",
+            "example": "Hello"
+          },
+          "guest_views": {
+            "type": "number",
+            "example": 17
+          },
+          "user_views": {
+            "type": "number",
+            "example": 20
+          },
+          "type": {
+            "description": "{\"Tweet\" : 0; \"Retweet\" : 1,\"Comment\" : 2,\"QuoteTwwet\": 3}",
+            "type": "number",
+            "enum": [
+              "Tweet",
+              "Retweet",
+              "Comment",
+              "QuoteTweet"
+            ],
+            "example": 2
+          },
+          "audience": {
+            "description": "{\"Everyone\": 0 , \"TweetCircle\" : 1}",
+            "type": "number",
+            "enum": [
+              "Everyone",
+              "TweetCircle"
+            ],
+            "example": 1
+          },
+          "parent_id": {
+            "type": "string",
+            "example": "64c0f1fba5e58663dc2c058b"
+          },
+          "media": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "https://twitter-clone-2023-ap-southrest-1.s3.ap-southeast-1.amazonaws.com/images/64bdd74836ca8a8550593d3b/6261ae6ea7fac4de48309fa00.jpg"
+            }
+          },
+          "mentions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "UserId",
+              "example": "64ba2615b8d626c0589e0e8b"
+            }
+          },
+          "hashtags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "64ba2615b8d626c0589e0e8b"
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "format": "ISO8601",
+            "example": "2023-07-26T10:14:19.514Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "ISO8601",
+            "example": "2023-07-15T10:14:19.514Z"
+          },
+          "Bookmark_count": {
+            "type": "number",
+            "example": 1
+          },
+          "likes_count": {
+            "type": "number",
+            "example": 1
+          },
+          "retweet_count": {
+            "example": 1,
+            "type": "number"
+          },
+          "comment_count": {
+            "example": 1,
+            "type": "number"
+          },
+          "quote_count": {
+            "type": "number",
+            "example": 1
+          },
+          "views": {
+            "type": "number",
+            "example": 20
+          }
+        }
+      },
+      "ConversationDetailResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64cdd3f1d118c74afc26a48d"
+          },
+          "sender_id": {
+            "type": "string",
+            "example": "64bdd74836ca8a8550593d3b"
+          },
+          "receiver_id": {
+            "type": "string",
+            "example": "64bdd74836ca8a8550593d3b"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "ISO8601",
+            "example": "2023-08-05T04:45:37.640Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "ISO8601",
+            "example": "2023-08-05T04:45:37.640Z"
+          },
+          "message": {
+            "type": "string",
+            "example": "Hello ban!"
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "UserArray": {
+        "description": "List of user object",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

@@ -982,7 +982,7 @@ paths:
       summary: Lấy thông tin tweet
       description: Lấy thông tin tweet
 
-      operationId: get-user-tweet
+      operationId: delete-user-tweet
       security:
         - bearAuth: []
       parameters:
